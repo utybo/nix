@@ -2,7 +2,7 @@
 
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  ms-edge-wayland = import ../apps/ms-edge-wayland.nix;
+  ms-edge-wayland = import ../apps/ms-edge-wayland.nix { inherit config pkgs; };
 in
 {
   imports = [
