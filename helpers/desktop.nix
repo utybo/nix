@@ -2,51 +2,47 @@
 
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in {
+  ms-edge-wayland = import ../apps/ms-edge-wayland.nix;
+in
+{
   imports = [
     ./hidpi.nix
     ./shell.nix
   ];
 
   home.packages = [
-    pkgs.micro
-    unstable.discord
-    pkgs.gnome.gnome-tweaks
-    pkgs.slack
+    # Small utilities
+    pkgs.figlet
     pkgs.gh
-    pkgs.jdk
+    pkgs.gnome.gnome-tweaks
+    pkgs.lolcat
+    pkgs.micro
+    pkgs.pavucontrol
+    pkgs.wl-clipboard
+
+    # Nix-related utilities
+    pkgs.nixpkgs-fmt
+    pkgs.rnix-lsp
+
+    # Java dev tools
+    pkgs.jbang
     pkgs.jdk17
     pkgs.maven
-    pkgs.wl-clipboard
     unstable.jetbrains.idea-ultimate
-    (
-      let
-        microsoft-edge-no-desktop = pkgs.microsoft-edge.overrideAttrs (oldAttrs: rec {
-          fixupPhase = ''
-            mv $out/share/applications/microsoft-edge.desktop $out/share/applications/microsoft-edge.desktop.disabled
 
-            substituteInPlace $out/bin/microsoft-edge \
-              --replace /bin/bash ${pkgs.bash}/bin/bash
-          '';
-        });
-      in pkgs.symlinkJoin {
-        name = "zoroedge";
-        paths = [ microsoft-edge-no-desktop ];
-        buildInputs = [ microsoft-edge-no-desktop pkgs.makeWrapper pkgs.wayland ];
-        postBuild = ''
-          cp ${microsoft-edge-no-desktop}/share/applications/microsoft-edge.desktop.disabled \
-            $out/share/applications/microsoft-edge.desktop
-          
-          substituteInPlace $out/share/applications/microsoft-edge.desktop \
-            --replace ${microsoft-edge-no-desktop}/bin/microsoft-edge $out/bin/microsoft-edge
-          
-          wrapProgram $out/bin/microsoft-edge \
-            --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland" \
-            --set LD_LIBRARY_PATH ${pkgs.wayland}/lib
-        '';
-    })
+    # Node dev tools
+    pkgs.nodejs
+    pkgs.nodePackages.pnpm
+
+    # Communication apps
+    pkgs.slack
+    unstable.discord
+
+    # Fonts
     pkgs.cascadia-code
-    pkgs.jbang
+
+    # Patched apps
+    ms-edge-wayland
   ];
 
   programs.firefox = {
@@ -65,6 +61,6 @@ in {
   programs.git = {
     enable = true;
     userName = "Zoroark";
-    userEmail = "utybodev" + (builtins.elemAt [ "@" ] 0 ) + "gmail.com";
+    userEmail = "utybodev" + (builtins.elemAt [ "@" ] 0) + "gmail.com";
   };
 }
