@@ -34,9 +34,20 @@ in
     pkgs.nodejs
     pkgs.nodePackages.pnpm
 
+    # .NET dev tools
+    pkgs.dotnet-sdk
+    unstable.jetbrains.rider
+
+    # Python dev tools
+    pkgs.python310
+    pkgs.python310Packages.poetry
+
     # Communication apps
     pkgs.slack
     unstable.discord
+
+    # Random apps
+    pkgs.spotify
 
     # Fonts
     pkgs.cascadia-code
@@ -53,10 +64,8 @@ in
       };
     };
   };
+
   programs.vscode.enable = true;
-
-  # Flag for Wayland support with MS edge
-
 
   programs.git = {
     enable = true;
