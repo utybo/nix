@@ -65,7 +65,10 @@ in
     };
   };
 
-  programs.vscode.enable = true;
+  programs.vscode = {
+    enable = true;
+    package = unstable.vscode;
+  };
 
   programs.git = {
     enable = true;
