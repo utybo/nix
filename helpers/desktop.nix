@@ -3,6 +3,7 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   ms-edge-wayland = import ../apps/ms-edge-wayland.nix { inherit config pkgs; };
+  node16Packages = (unstable.nodePackages.override { nodejs = unstable.nodejs-16_x; });
 in
 {
   imports = [
@@ -32,24 +33,7 @@ in
 
     # Node dev tools
     unstable.nodejs
-    (
-      let
-        pnpmN16 = (unstable.nodePackages.override { nodejs = unstable.nodejs-16_x; }).pnpm;
-      in
-      pnpmN16.override {
-        # Recent versions of nodeJS cause havoc with node2nix, leading to missing bins:
-        # - https://github.com/svanderburg/node2nix/issues/293
-        # - https://github.com/NixOS/nixpkgs/issues/145432
-        # This recreates them manually
-        postInstall = ''
-          mkdir -p $out/bin
-          for binary in $out/lib/node_modules/pnpm/bin/*.cjs; do
-            ln -s $binary $out/bin/$(basename ''${binary%.cjs})
-          done
-          ${pnpmN16.postInstall}
-        '';
-      }
-    )
+    node16Packages.pnpm
 
     # .NET dev tools
     pkgs.dotnet-sdk
@@ -91,5 +75,11 @@ in
     enable = true;
     userName = "Zoroark";
     userEmail = "utybodev" + (builtins.elemAt [ "@" ] 0) + "gmail.com";
+    extraConfig = {
+      credential = {
+        credentialStore = "secretservice";
+        helper = "/nix/store/0dgisvxrsm2rjrv97yzl6zq92v5a41wi-git-credential-manager-2.0.785/bin/git-credential-manager-core";
+      };
+    };
   };
 }
