@@ -39,6 +39,13 @@ in
     pkgs.dotnet-sdk
     unstable.jetbrains.rider
 
+    # C dev tools
+    # GCC and Clang have a conflict with `ld`, set gcc as higher priority to resolve it
+    (pkgs.hiPrio pkgs.gcc)
+    pkgs.clang
+    pkgs.gnumake
+    pkgs.clang-tools
+
     # Python dev tools
     pkgs.python310
     pkgs.python310Packages.poetry
@@ -81,5 +88,11 @@ in
         helper = "/nix/store/0dgisvxrsm2rjrv97yzl6zq92v5a41wi-git-credential-manager-2.0.785/bin/git-credential-manager-core";
       };
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
   };
 }
