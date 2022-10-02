@@ -95,4 +95,24 @@ in
     viAlias = true;
     vimAlias = true;
   };
+
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    enableSyntaxHighlighting = true;
+    enableVteIntegration = true;
+    history = {
+      ignoreSpace = true;
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "github" "gradle" "mvn" "node" "npm" "python" "sudo" ];
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
