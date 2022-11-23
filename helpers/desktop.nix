@@ -20,6 +20,7 @@ in
     pkgs.micro
     pkgs.pavucontrol
     pkgs.wl-clipboard
+    pkgs.bat
 
     # Nix-related utilities
     pkgs.nixpkgs-fmt
@@ -29,6 +30,8 @@ in
     pkgs.jbang
     pkgs.jdk17
     pkgs.maven
+    pkgs.bind
+    unstable.gradle
     unstable.jetbrains.idea-ultimate
 
     # Node dev tools
@@ -45,24 +48,42 @@ in
     pkgs.clang
     pkgs.gnumake
     pkgs.clang-tools
+    pkgs.criterion
+    pkgs.criterion.dev
 
     # Python dev tools
     pkgs.python310
-    pkgs.python310Packages.poetry
+    unstable.python310Packages.poetry
 
     # Communication apps
-    pkgs.slack
+    unstable.slack
     unstable.discord
 
     # Random apps
     pkgs.spotify
+    pkgs.inkscape
+    pkgs.libreoffice
+    pkgs.yubikey-manager-qt
+    pkgs.google-chrome
+    unstable.newsflash
+    unstable.etcher
 
     # Fonts
     pkgs.cascadia-code
 
     # Patched apps
     ms-edge-wayland
+
+    # Man pages
+    pkgs.man-pages
+    pkgs.man-pages-posix
+
+    # Arduino
+    pkgs.arduino
   ];
+
+  home.enableDebugInfo = true;
+  home.enableNixpkgsReleaseCheck = true;
 
   programs.firefox = {
     enable = true;
@@ -73,9 +94,15 @@ in
     };
   };
 
+
   programs.vscode = {
     enable = true;
     package = unstable.vscode;
+    # package = unstable.vscode.fhsWithPackages (ps: with ps; [ 
+    #   vscode-extensions.ms-vscode.cpptools
+    #   git
+    # ]);
+    extensions = [ unstable.vscode-extensions.ms-vscode.cpptools ];
   };
 
   programs.git = {
@@ -94,7 +121,15 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
+    extraConfig = ''
+      filetype plugin indent on
+      set tabstop=4
+      set shiftwidth=4
+      set expandtab
+    '';
   };
+
+  programs.bash.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -107,12 +142,18 @@ in
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "github" "gradle" "mvn" "node" "npm" "python" "sudo" ];
+      plugins = [ "git" "github" "gradle" "mvn" "node" "npm" "python" "sudo" "direnv" ];
     };
   };
 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 }
