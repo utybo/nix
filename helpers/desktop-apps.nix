@@ -22,6 +22,8 @@ in
     unstable.newsflash
     ms-edge-wayland
     pkgs.vlc
+    unstable.realvnc-vnc-viewer
+    pkgs.gnome.dconf-editor
   ];
 
   programs.firefox = {
