@@ -2,6 +2,7 @@
 let
   unstable = (import ./unstable.nix).unstable;
   ms-edge-wayland = import ../apps/ms-edge-wayland.nix { inherit config pkgs; };
+  utybonur = (import ./utybonur.nix { inherit pkgs; }).utybonur;
 in
 {
   home.packages = [
@@ -11,7 +12,7 @@ in
 
     # Communication apps
     unstable.slack
-    pkgs.discord
+    unstable.discord
 
     # Random apps
     pkgs.spotify
@@ -24,6 +25,9 @@ in
     pkgs.vlc
     unstable.realvnc-vnc-viewer
     pkgs.gnome.dconf-editor
+
+    utybonur.kuro
+    utybonur.git-credential-manager
   ];
 
   programs.firefox = {
