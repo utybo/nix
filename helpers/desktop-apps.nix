@@ -2,7 +2,7 @@
 let
   unstable = (import ./unstable.nix).unstable;
   ms-edge-wayland = import ../apps/ms-edge-wayland.nix { inherit config pkgs; };
-  utybonur = (import ./utybonur.nix { inherit pkgs; }).utybonur;
+  utybonur = (import ./utybonur.nix { inherit pkgs; });
 in
 {
   home.packages = [

@@ -5,6 +5,6 @@ in
 {
   home.packages = [
     pkgs.python310
-    unstable.python310Packages.poetry
+    pkgs.python310Packages.poetry
   ];
 }

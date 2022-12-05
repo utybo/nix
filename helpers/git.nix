@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  utybonur = (import ./utybonur.nix { inherit pkgs; }).utybonur;
+  utybonur = (import ./utybonur.nix { inherit pkgs; });
 in
 {
-  programs. git = {
+  programs.git = {
     enable = true;
     userName = "Zoroark";
     userEmail = "utybodev" + (builtins.elemAt [ "@" ] 0) + "gmail.com";
