@@ -2,7 +2,7 @@
 { config, pkgs, ... }:
 
 let
-  unstable = (import ./unstable.nix).unstable;
+  unstable = (import ./unstable.nix);
   utybonur = (import ./utybonur.nix { inherit pkgs; });
 in
 {

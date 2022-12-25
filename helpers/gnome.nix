@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  unstable = (import ./unstable.nix).unstable;
+  unstable = (import ./unstable.nix);
   autostartPrograms = [ pkgs.discord unstable.slack ];
 in
 rec {

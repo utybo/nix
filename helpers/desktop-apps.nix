@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  unstable = (import ./unstable.nix).unstable;
+  unstable = (import ./unstable.nix);
   ms-edge-wayland = import ../apps/ms-edge-wayland.nix { inherit config pkgs; };
   utybonur = (import ./utybonur.nix { inherit pkgs; });
 in

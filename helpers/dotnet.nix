@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  unstable = (import ./unstable.nix).unstable;
+  unstable = (import ./unstable.nix);
 in
 {
   home.packages = [

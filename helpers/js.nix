@@ -2,7 +2,7 @@
 
 { config, pkgs, ... }:
 let
-  unstable = (import ./unstable.nix).unstable;
+  unstable = (import ./unstable.nix);
   node16Packages = (unstable.nodePackages.override { nodejs = unstable.nodejs-16_x; });
 in
 {
