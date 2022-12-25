@@ -25,6 +25,7 @@ in
     pkgs.vlc
     unstable.realvnc-vnc-viewer
     pkgs.gnome.dconf-editor
+    pkgs.gnome-solanum
 
     utybonur.kuro
     utybonur.git-credential-manager

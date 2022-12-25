@@ -3,6 +3,7 @@
 
 let
   unstable = (import ./unstable.nix).unstable;
+  utybonur = (import ./utybonur.nix { inherit pkgs; });
 in
 {
   home.packages = [
@@ -11,6 +12,6 @@ in
     pkgs.maven
     pkgs.bind
     unstable.gradle
-    unstable.jetbrains.idea-ultimate
+    utybonur.jetbrains.idea-ultimate
   ];
 }

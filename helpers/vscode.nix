@@ -2,11 +2,12 @@
 
 let
   unstable = (import ./unstable.nix).unstable;
+  wlfix = import ./wlfix.nix;
 in
 {
   programs.vscode = {
     enable = true;
-    package = unstable.vscode;
+    package = (wlfix unstable unstable.vscode);
     extensions = [ unstable.vscode-extensions.ms-vscode.cpptools ];
   };
 }
